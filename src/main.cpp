@@ -15,24 +15,32 @@
 //#include <TimeLib.h>
 
 WiFiUDP ntpUDP;
+WiFiClientSecure client;
 
 AudioFileSourceSPIFFS *file;
 AudioGeneratorAAC *aac;
 AudioOutputI2SNoDAC *out;
 
+int hours, minutes, seconds;
+
 // You can specify the time server pool and the offset (in seconds, can be
 // changed later with setTimeOffset() ). Additionaly you can specify the
 // update interval (in milliseconds, can be changed using setUpdateInterval() ).
 NTPClient timeClient(ntpUDP, "id.pool.ntp.org", 25200, 600000);
-unsigned long nextUpdTime;
-int time_between_update; //in minutes int
+unsigned long nextUpdateTime;
+int minutesBetweenUpdates = 30;
 
 void setup_wifi();
+void setup_ntp();
 
 void setup()
 {
+  pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(115200);
+  while(!Serial) {}; //wait
   setup_wifi();
+  digitalWrite(LED_BUILTIN, LOW); //pullup means 0 is full brightness
+  timeClient.begin();
   
   SPIFFS.begin();
   file = new AudioFileSourceSPIFFS("/reveille.aac");
@@ -49,13 +57,39 @@ void loop()
   if (aac->isRunning()) {
     aac->loop();
   } else {
-    Serial.printf("AAC done\n");
+    if (millis() > nextUpdateTime) {
+      nextUpdateTime = millis() + (60000 * minutesBetweenUpdates);
+      timeClient.update();
+    }
+
+    hours = timeClient.getHours();
+    if (hours < 10) Serial.print("0");
+    Serial.print(hours);
+    
+    Serial.print(":");
+    
+    minutes = timeClient.getMinutes();
+    if (minutes < 10) Serial.print("0");
+    Serial.print(minutes);
+    
+    Serial.print(":");
+    
+    seconds = timeClient.getSeconds();
+    if (seconds < 10) Serial.print("0");
+    Serial.print(seconds);
+
+    Serial.print("     millis=");
+    Serial.print(millis());
+
+    Serial.print("     nextUpdateTime=");
+    Serial.print(nextUpdateTime);
+
+    Serial.println();    
     delay(1000);
   }
 }
 
 void setup_wifi() {
-  delay(10);
   Serial.println();
   WiFi.hostname("AlarmClock");
   WiFi.setPhyMode(WIFI_PHY_MODE_11B);
@@ -63,12 +97,15 @@ void setup_wifi() {
   Serial.print(WIFI_SSID);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
     Serial.print(".");
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(250);
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(250);    
   }
   WiFi.setAutoReconnect(true);
   WiFi.persistent(true);
-  Serial.print("WiFi connected on IP address ");
+  Serial.print(" WiFi connected on IP address ");
   Serial.println(WiFi.localIP());
+  client.setInsecure();  //needed because 8266 board on >2.5 and https (?)
 }
-
