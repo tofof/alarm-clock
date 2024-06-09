@@ -2,7 +2,7 @@
 #include "AudioGeneratorAAC.h"
 #include "AudioOutputI2SNoDAC.h"
 #include "AudioFileSourcePROGMEM.h"
-#include "sampleaac.h"
+#include "reveille.h"
 
 AudioFileSourcePROGMEM *in;
 AudioGeneratorAAC *aac;
@@ -13,7 +13,7 @@ void setup()
   Serial.begin(115200);
 
   audioLogger = &Serial;
-  in = new AudioFileSourcePROGMEM(sampleaac, sizeof(sampleaac));
+  in = new AudioFileSourcePROGMEM(reveille, sizeof(reveille));
   aac = new AudioGeneratorAAC();
   out = new AudioOutputI2SNoDAC();
 
