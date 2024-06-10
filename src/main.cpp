@@ -31,7 +31,7 @@ int hours, minutes, seconds;
 // You can specify the time server pool and the offset (in seconds, can be
 // changed later with setTimeOffset() ). Additionaly you can specify the
 // update interval (in milliseconds, can be changed using setUpdateInterval() ).
-NTPClient timeClient(ntpUDP, "us.pool.ntp.org", 0, 1*MILLI_PER_MIN);
+NTPClient timeClient(ntpUDP, "us.pool.ntp.org", 0, 20*MILLI_PER_MIN);
 
 void setup_wifi();
 void setup_ntp();
@@ -51,39 +51,22 @@ void setup()
   digitalWrite(LED_BUILTIN, LOW); //pullup means 0 is full brightness
   timeClient.begin();
   timeClient.update();
+  setup_sound();
   setup_mqtt();
-  //setup_sound();
 }
 
 void loop()
 {
-  // if (aac->isRunning()) {
-  //   aac->loop();
-  // } else {
+  if (aac->isRunning()) {
+     aac->loop();
+  } else {
     if(timeClient.update()) { //uses interval specified at initialization
       Serial.println("Time Updated");
     } 
-
-    hours = timeClient.getHours();
-    if (hours < 10) Serial.print("0");
-    Serial.print(hours);
-    
-    Serial.print(":");
-    
-    minutes = timeClient.getMinutes();
-    if (minutes < 10) Serial.print("0");
-    Serial.print(minutes);
-    
-    Serial.print(":");
-    
-    seconds = timeClient.getSeconds();
-    if (seconds < 10) Serial.print("0");
-    Serial.print(seconds);
-
-    Serial.println();
+    Serial.print(".");
     mqttClient.loop(); //call loop 
     delay(1000);
-  //}
+  }
 }
 
 void setup_wifi() {
@@ -124,12 +107,12 @@ void setup_mqtt() {
   if (mqttClient.subscribe("homeassistant/device/bedalarm/time", 1)) {
     Serial.println("Subscribed to time");
   } else {
-    Serial.println("Couldn't subscribe to time");
+    Serial.println("Couldn't subscribe to alarm time");
   }
   if (mqttClient.subscribe("homeassistant/device/bedalarm/enable", 1)) {
     Serial.println("Subscribed to enable");
   } else {
-    Serial.println("Couldn't subscribe to enable");
+    Serial.println("Couldn't subscribe to alarm enable");
   }
 }
 
