@@ -1,47 +1,46 @@
 #include <Arduino.h>
+#include "secrets.h"
+
+// WiFi
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 #include <WiFiClientSecure.h>
-#include "secrets.h"
+WiFiUDP ntpUDP;
+WiFiClient wifiClient;
+void setup_wifi();
 
-// Libraries for Audio
+// Audio
 #include "AudioFileSourceSPIFFS.h"
 #include "AudioGeneratorAAC.h"
 #include "AudioOutputI2SNoDAC.h"
 #include "AudioFileSourcePROGMEM.h"
-
-// Libraries for NTP Clock
-#include "NTPClient.h"
-#include "TimeLib.h"
-#define MILLI_PER_MIN ((time_t)(SECS_PER_MIN * 1000))
-
-// Libraries for MQTT
-#include "PubSubClient.h"
-#define TOPIC_TIME "homeassistant/device/bedalarm/time"
-#define TOPIC_ENABLE "homeassistant/device/bedalarm/enable"
-
-WiFiUDP ntpUDP;
-WiFiClient wifiClient;
-PubSubClient mqttClient(wifiClient);
-
 AudioFileSourceSPIFFS *file;
 AudioGeneratorAAC *aac;
 AudioOutputI2SNoDAC *out;
-
-bool alarmEnabled = false;
-time_t alarmTime = 0;
-
-// You can specify the time server pool and the offset (in seconds, can be
-// changed later with setTimeOffset() ). Additionaly you can specify the
-// update interval (in milliseconds, can be changed using setUpdateInterval() ).
-NTPClient timeClient(ntpUDP, "us.pool.ntp.org", 0, 20*MILLI_PER_MIN);
-
-void setup_wifi();
-void setup_ntp();
-void setup_mqtt();
-void callback_mqtt(char*, byte*, unsigned int);
 void setup_sound();
 void play_sound();
+
+// NTP Time
+#include "NTPClient.h"
+#include "TimeLib.h"
+#define MILLI_PER_MIN ((time_t)(SECS_PER_MIN * 1000))
+NTPClient timeClient(ntpUDP, "us.pool.ntp.org", 0, 20*MILLI_PER_MIN);
+void setup_ntp();
+void update_time();
+
+// MQTT
+#include "PubSubClient.h"
+#define TOPIC_TIME "homeassistant/device/bedalarm/time"
+#define TOPIC_ENABLE "homeassistant/device/bedalarm/enable"
+PubSubClient mqttClient(wifiClient);
+void setup_mqtt();
+void callback_mqtt(char*, byte*, unsigned int);
+
+// Alarm Itself
+bool alarmEnabled = false;
+time_t alarmTime = 0;
+void print_times();
+void check_alarm();
 
 void setup()
 {
@@ -58,28 +57,15 @@ void setup()
 
 void loop()
 {
-  if (aac->isRunning()) {
+  if (aac->isRunning()) {   // need to continually loop without delay during playback
      aac->loop();
   } else {
-    if(now() < 1000) {
-      Serial.println("Forcing time initialization");
-      while(!timeClient.forceUpdate()) {};
-      setTime(timeClient.getEpochTime());
-    }
-    if(timeClient.update()) { //uses interval specified at initialization
-      Serial.println("Time Updated");
-      setTime(timeClient.getEpochTime());
-    }
-    Serial.print(now());
-    Serial.print("    Alarm at ");
-    Serial.print(alarmTime);
-    Serial.print(" ");
-    Serial.print(alarmEnabled);
-    Serial.print(" in ");
-    Serial.print((alarmTime-now())/SECS_PER_HOUR);
-    Serial.print(" hours.");
-    Serial.println();
-    mqttClient.loop(); //call loop 
+    update_time();
+    print_times();
+    check_alarm();
+
+
+    mqttClient.loop();
     delay(1000);
   }
 }
@@ -168,4 +154,34 @@ void setup_sound() {
 
 void play_sound() {
   aac->begin(file, out);
+}
+
+void update_time() {
+  if(now() < SECS_YR_2000) {
+    Serial.println("Forcing time initialization");
+    while(!timeClient.forceUpdate()) {};
+    setTime(timeClient.getEpochTime());
+  }
+  if(timeClient.update()) { //uses interval specified at initialization
+    Serial.println("Time Updated");
+    setTime(timeClient.getEpochTime());
+  }
+}
+
+void print_times() {
+  Serial.print(now());
+  Serial.print("    Alarm at ");
+  Serial.print(alarmTime);
+  Serial.print(" ");
+  Serial.print(alarmEnabled);
+  Serial.print(" in ");
+  Serial.print((alarmTime-now())/SECS_PER_HOUR);
+  Serial.print(" hours.");
+  Serial.println();
+}
+
+void check_alarm() {
+  if (alarmEnabled) {
+    
+  }
 }
