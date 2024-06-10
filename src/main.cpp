@@ -26,8 +26,6 @@ AudioFileSourceSPIFFS *file;
 AudioGeneratorAAC *aac;
 AudioOutputI2SNoDAC *out;
 
-int hours, minutes, seconds;
-
 // You can specify the time server pool and the offset (in seconds, can be
 // changed later with setTimeOffset() ). Additionaly you can specify the
 // update interval (in milliseconds, can be changed using setUpdateInterval() ).
@@ -39,8 +37,6 @@ void setup_mqtt();
 void callback_mqtt(char*, byte*, unsigned int);
 void setup_sound();
 void play_sound();
-
-
 
 void setup()
 {
