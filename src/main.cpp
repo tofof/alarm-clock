@@ -13,11 +13,13 @@
 // Libraries for NTP Clock
 #include "NTPClient.h"
 #include "TimeLib.h"
+#define MILLI_PER_MIN ((time_t)(SECS_PER_MIN * 1000))
 
 // Libraries for MQTT
 #include "PubSubClient.h"
+#define TOPIC_TIME "homeassistant/device/bedalarm/time"
+#define TOPIC_ENABLE "homeassistant/device/bedalarm/enable"
 
-#define MILLI_PER_MIN ((time_t)(SECS_PER_MIN * 1000))
 WiFiUDP ntpUDP;
 WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
@@ -25,6 +27,9 @@ PubSubClient mqttClient(wifiClient);
 AudioFileSourceSPIFFS *file;
 AudioGeneratorAAC *aac;
 AudioOutputI2SNoDAC *out;
+
+bool alarmEnabled = false;
+time_t alarmTime = 0;
 
 // You can specify the time server pool and the offset (in seconds, can be
 // changed later with setTimeOffset() ). Additionaly you can specify the
@@ -56,10 +61,24 @@ void loop()
   if (aac->isRunning()) {
      aac->loop();
   } else {
+    if(now() < 1000) {
+      Serial.println("Forcing time initialization");
+      while(!timeClient.forceUpdate()) {};
+      setTime(timeClient.getEpochTime());
+    }
     if(timeClient.update()) { //uses interval specified at initialization
       Serial.println("Time Updated");
-    } 
-    Serial.print(".");
+      setTime(timeClient.getEpochTime());
+    }
+    Serial.print(now());
+    Serial.print("    Alarm at ");
+    Serial.print(alarmTime);
+    Serial.print(" ");
+    Serial.print(alarmEnabled);
+    Serial.print(" in ");
+    Serial.print((alarmTime-now())/SECS_PER_HOUR);
+    Serial.print(" hours.");
+    Serial.println();
     mqttClient.loop(); //call loop 
     delay(1000);
   }
@@ -83,6 +102,7 @@ void setup_wifi() {
   WiFi.persistent(true);
   Serial.print(" WiFi connected on IP address ");
   Serial.println(WiFi.localIP());
+  delay(1000);
 }
 
 void setup_mqtt() {
@@ -120,6 +140,21 @@ void callback_mqtt(char* topic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
   }
   Serial.println();
+
+  if (strcmp(topic, TOPIC_ENABLE) == 0) {
+    if (payload[1] == 'n') { // "oN"
+      alarmEnabled = true;
+    } else if (payload[1] == 'f')  { // "oFf"
+      alarmEnabled = false;
+    } else {
+      Serial.print("ERROR received '");
+      for (unsigned int i=0;i<length;i++) Serial.print((char)payload[i]);
+      Serial.println("'");
+    }
+  }
+  if (strcmp(topic, TOPIC_TIME) == 0) {
+    alarmTime = atoi((char*)payload);
+  }
 }
 
 void setup_sound() {
