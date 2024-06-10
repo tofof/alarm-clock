@@ -13,11 +13,9 @@
 // Libraries for NTP Clock
 #include "NTPClient.h"
 #include "TimeLib.h"
-//#include "Timezone.h"
 
 // Libraries for MQTT
 #include "PubSubClient.h"
-#include "ArduinoJson.h"
 
 #define MILLI_PER_MIN ((time_t)(SECS_PER_MIN * 1000))
 WiFiUDP ntpUDP;
@@ -37,6 +35,12 @@ NTPClient timeClient(ntpUDP, "us.pool.ntp.org", 0, 1*MILLI_PER_MIN);
 
 void setup_wifi();
 void setup_ntp();
+void setup_mqtt();
+void callback_mqtt(char*, byte*, unsigned int);
+void setup_sound();
+void play_sound();
+
+
 
 void setup()
 {
@@ -46,22 +50,16 @@ void setup()
   setup_wifi();
   digitalWrite(LED_BUILTIN, LOW); //pullup means 0 is full brightness
   timeClient.begin();
-  
-  SPIFFS.begin();
-  file = new AudioFileSourceSPIFFS("/reveille.aac");
-
-  audioLogger = &Serial;
-  aac = new AudioGeneratorAAC();
-  out = new AudioOutputI2SNoDAC();
-
-  aac->begin(file, out);
+  timeClient.update();
+  setup_mqtt();
+  //setup_sound();
 }
 
 void loop()
 {
-  if (aac->isRunning()) {
-    aac->loop();
-  } else {
+  // if (aac->isRunning()) {
+  //   aac->loop();
+  // } else {
     if(timeClient.update()) { //uses interval specified at initialization
       Serial.println("Time Updated");
     } 
@@ -82,9 +80,10 @@ void loop()
     if (seconds < 10) Serial.print("0");
     Serial.print(seconds);
 
-    Serial.println();    
+    Serial.println();
+    mqttClient.loop(); //call loop 
     delay(1000);
-  }
+  //}
 }
 
 void setup_wifi() {
@@ -105,4 +104,54 @@ void setup_wifi() {
   WiFi.persistent(true);
   Serial.print(" WiFi connected on IP address ");
   Serial.println(WiFi.localIP());
+}
+
+void setup_mqtt() {
+  mqttClient.setServer(MQTT_Server, MQTT_Port);
+  mqttClient.setCallback(callback_mqtt);
+  while (!mqttClient.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    String mqttClientId = "bedalarm8266";
+    if (mqttClient.connect(mqttClientId.c_str(), MQTT_User, MQTT_Password)) {
+      Serial.println("connected");
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(mqttClient.state());
+      Serial.println(" will try again in 5 seconds");
+      delay(5000);
+    }
+  }
+  if (mqttClient.subscribe("homeassistant/device/bedalarm/time", 1)) {
+    Serial.println("Subscribed to time");
+  } else {
+    Serial.println("Couldn't subscribe to time");
+  }
+  if (mqttClient.subscribe("homeassistant/device/bedalarm/enable", 1)) {
+    Serial.println("Subscribed to enable");
+  } else {
+    Serial.println("Couldn't subscribe to enable");
+  }
+}
+
+void callback_mqtt(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+  for (unsigned int i=0;i<length;i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();
+}
+
+void setup_sound() {
+  SPIFFS.begin();
+  file = new AudioFileSourceSPIFFS("/reveille.aac");
+
+  audioLogger = &Serial;
+  aac = new AudioGeneratorAAC();
+  out = new AudioOutputI2SNoDAC();
+}
+
+void play_sound() {
+  aac->begin(file, out);
 }
