@@ -1,31 +1,31 @@
 ./core.restore_state-42-      "state": {"entity_id":"update.influxdb_update","state":"off","attributes":{"auto_update":false,"installed_version":"5.0.0","in_progress":false,"latest_version":"5.0.0","release_summary":"## What’s changed\n\n## 🚨 Breaking changes\n\n- Drop support for i386 @frenck ([#303](https://github.com/hassio-addons/addon-influxdb/pull/303))\n\n## 🐛 Bug fixes\n\n- Fix application of the “reporting” setting @QRPp ([#304](https://github.com/hassio-addons/addon","release_url":null,"skipped_version":null,"title":"InfluxDB","entity_picture":"/api/hassio/addons/a0d7b954_influxdb/icon","friendly_name":"InfluxDB Update","supported_features":25},"last_changed":"2024-06-09T22:36:36.400381+00:00","last_reported":"2024-06-09T22:36:36.400381+00:00","last_updated":"2024-06-09T22:36:36.400381+00:00","context":{"id":"01HZZJAXNGQQS7Y6M6CEKJ2Y3Q","parent_id":null,"user_id":null}},
 ./core.restore_state-43-      "extra_data": null,
-./core.restore_state-44-      "last_seen": "2024-06-10T18:37:41.423839+00:00"
+./core.restore_state-44-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-45-    },
 ./core.restore_state-46-    {
 ./core.restore_state-47-      "state": {"entity_id":"update.home_assistant_operating_system_update","state":"off","attributes":{"auto_update":false,"installed_version":"12.3","in_progress":false,"latest_version":"12.3","release_summary":null,"release_url":"https://github.com/home-assistant/operating-system/releases/tag/12.3","skipped_version":null,"title":"Home Assistant Operating System","entity_picture":"https://brands.home-assistant.io/homeassistant/icon.png","friendly_name":"Home Assistant Operating System Update","supported_features":3},"last_changed":"2024-06-09T22:36:36.402116+00:00","last_reported":"2024-06-09T22:36:36.402116+00:00","last_updated":"2024-06-09T22:36:36.402116+00:00","context":{"id":"01HZZJAXNJAS6M6CPM8B9KHD3D","parent_id":null,"user_id":null}},
 ./core.restore_state-48-      "extra_data": null,
-./core.restore_state-49-      "last_seen": "2024-06-10T18:37:41.423839+00:00"
+./core.restore_state-49-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-50-    },
 ./core.restore_state-51-    {
 ./core.restore_state:52:      "state": {"entity_id":"input_boolean.bed_sensor_alarm_enable","state":"on","attributes":{"editable":true,"icon":"mdi:alarm-check","friendly_name":"Enable Alarm"},"last_changed":"2024-06-10T01:47:05.667605+00:00","last_reported":"2024-06-10T01:47:05.667605+00:00","last_updated":"2024-06-10T01:47:05.667605+00:00","context":{"id":"01HZZX7Q22EC2HJK8X092AAGJG","parent_id":null,"user_id":"6ab11609e44440659ba1ae805962fd34"}},
 ./core.restore_state-53-      "extra_data": null,
-./core.restore_state-54-      "last_seen": "2024-06-10T18:37:41.423839+00:00"
+./core.restore_state-54-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-55-    },
 ./core.restore_state-56-    {
 ./core.restore_state-57-      "state": {"entity_id":"conversation.home_assistant","state":"unknown","attributes":{"friendly_name":"Home Assistant"},"last_changed":"2024-06-09T22:36:52.278220+00:00","last_reported":"2024-06-09T22:36:52.278220+00:00","last_updated":"2024-06-09T22:36:52.278220+00:00","context":{"id":"01HZZJBD5PPNX9HW2H8Y9ZDK4Z","parent_id":null,"user_id":null}},
 ./core.restore_state-58-      "extra_data": null,
-./core.restore_state-59-      "last_seen": "2024-06-10T18:37:41.423839+00:00"
+./core.restore_state-59-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-60-    },
 ./core.restore_state-61-    {
 ./core.restore_state:62:      "state": {"entity_id":"input_datetime.bed_sensor_alarm_time","state":"13:05:00","attributes":{"has_date":false,"has_time":true,"editable":true,"hour":13,"minute":5,"second":0,"timestamp":47100,"icon":"mdi:bed-clock","friendly_name":"Alarm Time"},"last_changed":"2024-06-10T18:04:48.798221+00:00","last_reported":"2024-06-10T18:04:48.798221+00:00","last_updated":"2024-06-10T18:04:48.798221+00:00","context":{"id":"01J01N5Z46MGR0SADKV5ER8W7X","parent_id":null,"user_id":"6ab11609e44440659ba1ae805962fd34"}},
 ./core.restore_state-63-      "extra_data": null,
-./core.restore_state-64-      "last_seen": "2024-06-10T18:37:41.423839+00:00"
+./core.restore_state-64-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-65-    },
 ./core.restore_state-66-    {
 ./core.restore_state-67-      "state": {"entity_id":"binary_sensor.furnace_filter","state":"off","attributes":{"device_class":"problem","friendly_name":"Furnace Filter"},"last_changed":"2024-06-09T22:37:40.807385+00:00","last_reported":"2024-06-09T22:37:40.807385+00:00","last_updated":"2024-06-09T22:37:40.807385+00:00","context":{"id":"01HZZJCWJ7FF8V0YN39RE3F4AD","parent_id":null,"user_id":null}},
 ./core.restore_state-68-      "extra_data": null,
-./core.restore_state-69-      "last_seen": "2024-06-10T18:37:41.423839+00:00"
+./core.restore_state-69-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-70-    },
 ./core.restore_state-71-    {
 ./core.restore_state-72-      "state": {"entity_id":"button.celestia_reboot","state":"unknown","attributes":{"device_class":"restart","friendly_name":"Celestia Restart"},"last_changed":"2024-06-09T22:37:33.370652+00:00","last_reported":"2024-06-09T22:37:33.370652+00:00","last_updated":"2024-06-09T22:37:33.370652+00:00","context":{"id":"01HZZJCN9TG1WJRBV8H4KA875K","parent_id":null,"user_id":null}},
@@ -37,55 +37,90 @@
 ./core.restore_state-204-        "native_value": "-45",
 ./core.restore_state-205-        "native_unit_of_measurement": "dBm"
 ./core.restore_state-206-      },
-./core.restore_state-207-      "last_seen": "2024-06-10T18:37:41.423839+00:00"
+./core.restore_state-207-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-208-    },
 ./core.restore_state-209-    {
 ./core.restore_state:210:      "state": {"entity_id":"automation.bed_sensor_alarm_mqtt_enable","state":"on","attributes":{"id":"1717969069479","last_triggered":"2024-06-10T01:47:05.674323+00:00","mode":"single","current":0,"icon":"mdi:bed-clock","friendly_name":"Bed Sensor Alarm MQTT - Enable"},"last_changed":"2024-06-10T01:02:38.449961+00:00","last_reported":"2024-06-10T01:47:05.691357+00:00","last_updated":"2024-06-10T01:47:05.691357+00:00","context":{"id":"01HZZX7Q247VJ1P75RTXFPVJYZ","parent_id":"01HZZX7Q22EC2HJK8X092AAGJG","user_id":null}},
 ./core.restore_state-211-      "extra_data": null,
-./core.restore_state-212-      "last_seen": "2024-06-10T18:37:41.423839+00:00"
+./core.restore_state-212-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-213-    },
 ./core.restore_state-214-    {
 ./core.restore_state:215:      "state": {"entity_id":"automation.bed_sensor_alarm_mqtt_time","state":"on","attributes":{"id":"1717981226071","last_triggered":"2024-06-10T18:05:00.526505+00:00","mode":"single","current":0,"icon":"mdi:bed-clock","friendly_name":"Bed Sensor Alarm MQTT - Time"},"last_changed":"2024-06-10T18:32:58.157195+00:00","last_reported":"2024-06-10T18:32:58.157195+00:00","last_updated":"2024-06-10T18:32:58.157195+00:00","context":{"id":"01J01PSH1DE0APWRE7A2RFJBHG","parent_id":null,"user_id":null}},
 ./core.restore_state-216-      "extra_data": null,
-./core.restore_state-217-      "last_seen": "2024-06-10T18:37:41.423839+00:00"
+./core.restore_state-217-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-218-    },
 ./core.restore_state-219-    {
-./core.restore_state:220:      "state": {"entity_id":"automation.bed_sensor_alarm_mqtt","state":"on","attributes":{"id":"1717969069479","last_triggered":"2024-06-10T00:58:16.140566+00:00","mode":"single","current":0,"icon":"mdi:bed-clock","friendly_name":"Bed Sensor Alarm MQTT"},"last_changed":"2024-06-10T00:18:19.549577+00:00","last_reported":"2024-06-10T00:58:16.159976+00:00","last_updated":"2024-06-10T00:58:16.159976+00:00","context":{"id":"01HZZTEA6B5KWYDBZ0NWS3B42R","parent_id":null,"user_id":null}},
+./core.restore_state-220-      "state": {"entity_id":"input_button.snooze_alarm_10_min","state":"2024-06-10T19:21:58.132540+00:00","attributes":{"editable":true,"icon":"mdi:alarm-snooze","friendly_name":"Snooze Alarm (10 min)"},"last_changed":"2024-06-10T19:21:58.132831+00:00","last_reported":"2024-06-10T19:21:58.132831+00:00","last_updated":"2024-06-10T19:21:58.132831+00:00","context":{"id":"01J01SK83C0AC3G0K2XA2C52AR","parent_id":null,"user_id":"6ab11609e44440659ba1ae805962fd34"}},
 ./core.restore_state-221-      "extra_data": null,
-./core.restore_state-222-      "last_seen": "2024-06-10T01:02:12.946551+00:00"
+./core.restore_state-222-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-223-    },
 ./core.restore_state-224-    {
-./core.restore_state:225:      "state": {"entity_id":"input_datetime.bed_sensor_alarm_clock","state":"12:00:00","attributes":{"has_date":false,"has_time":true,"editable":true,"hour":12,"minute":0,"second":0,"timestamp":43200,"icon":"mdi:bed-clock","friendly_name":"Alarm Time"},"last_changed":"2024-06-09T21:21:19.286650+00:00","last_reported":"2024-06-09T21:21:19.286650+00:00","last_updated":"2024-06-09T21:21:19.286650+00:00","context":{"id":"01HZZE12DNHS0BNNW4EP0Q79MN","parent_id":null,"user_id":"6ab11609e44440659ba1ae805962fd34"}},
+./core.restore_state:225:      "state": {"entity_id":"input_button.bed_sensor_alarm_suspend","state":"unknown","attributes":{"editable":true,"icon":"mdi:alarm-note-off","friendly_name":"Suspend Alarm (8 hours)"},"last_changed":"2024-06-10T19:49:27.233240+00:00","last_reported":"2024-06-10T19:49:27.233240+00:00","last_updated":"2024-06-10T19:49:27.233240+00:00","context":{"id":"01J01V5JJ1VGD0WAFTFE0FJF22","parent_id":null,"user_id":null}},
 ./core.restore_state-226-      "extra_data": null,
-./core.restore_state-227-      "last_seen": "2024-06-09T21:33:20.873465+00:00"
+./core.restore_state-227-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-228-    },
 ./core.restore_state-229-    {
-./core.restore_state:230:      "state": {"entity_id":"input_boolean.bed_sensor_alarm_armed","state":"on","attributes":{"editable":true,"icon":"mdi:alarm-check","friendly_name":"Alarm Enable"},"last_changed":"2024-06-09T21:21:20.045592+00:00","last_reported":"2024-06-09T21:34:27.386297+00:00","last_updated":"2024-06-09T21:34:27.386297+00:00","context":{"id":"01HZZES41T9YY9MJT0664TA20F","parent_id":null,"user_id":null}},
+./core.restore_state:230:      "state": {"entity_id":"automation.bed_sensor_alarm_mqtt_snooze","state":"on","attributes":{"id":"1718049801359","last_triggered":null,"mode":"single","current":0,"icon":"mdi:bed-clock","friendly_name":"Bed Sensor Alarm MQTT - Snooze"},"last_changed":"2024-06-10T20:03:28.963447+00:00","last_reported":"2024-06-10T20:03:56.921385+00:00","last_updated":"2024-06-10T20:03:56.921385+00:00","context":{"id":"01J01W03VSQN0H6AT6JQ21FJXP","parent_id":null,"user_id":null}},
 ./core.restore_state-231-      "extra_data": null,
-./core.restore_state-232-      "last_seen": "2024-06-09T21:34:27.401386+00:00"
+./core.restore_state-232-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-233-    },
 ./core.restore_state-234-    {
-./core.restore_state-235-      "state": {"entity_id":"input_boolean.enable_alarm","state":"off","attributes":{"editable":true,"icon":"mdi:alarm-check","friendly_name":"Enable Alarm"},"last_changed":"2024-06-09T21:36:15.307115+00:00","last_reported":"2024-06-09T21:37:12.710413+00:00","last_updated":"2024-06-09T21:36:15.307115+00:00","context":{"id":"01HZZEWDEB18XHZFGB73R1ZCS3","parent_id":null,"user_id":null}},
+./core.restore_state:235:      "state": {"entity_id":"automation.bed_sensor_alarm_mqtt_suspend","state":"on","attributes":{"id":"1718049901931","last_triggered":null,"mode":"single","current":0,"icon":"mdi:bed-clock","friendly_name":"Bed Sensor Alarm MQTT - Suspend"},"last_changed":"2024-06-10T20:05:11.679060+00:00","last_reported":"2024-06-10T20:05:28.793644+00:00","last_updated":"2024-06-10T20:05:28.793644+00:00","context":{"id":"01J01W2XJS0TAD26WZNYXNSFC5","parent_id":null,"user_id":null}},
 ./core.restore_state-236-      "extra_data": null,
-./core.restore_state-237-      "last_seen": "2024-06-09T21:37:12.718595+00:00"
+./core.restore_state-237-      "last_seen": "2024-06-10T22:07:41.601475+00:00"
 ./core.restore_state-238-    },
 ./core.restore_state-239-    {
-./core.restore_state-240-      "state": {"entity_id":"automation.write_the_time","state":"on","attributes":{"id":"1717973184629","last_triggered":"2024-06-09T23:58:45.364619+00:00","mode":"single","current":0,"friendly_name":"00 write the time"},"last_changed":"2024-06-09T23:07:56.291692+00:00","last_reported":"2024-06-09T23:58:45.377068+00:00","last_updated":"2024-06-09T23:58:45.377068+00:00","context":{"id":"01HZZQ1B3KD3V2R7BE1H5VAP58","parent_id":null,"user_id":null}},
+./core.restore_state:240:      "state": {"entity_id":"automation.bed_sensor_alarm_mqtt","state":"on","attributes":{"id":"1717969069479","last_triggered":"2024-06-10T00:58:16.140566+00:00","mode":"single","current":0,"icon":"mdi:bed-clock","friendly_name":"Bed Sensor Alarm MQTT"},"last_changed":"2024-06-10T00:18:19.549577+00:00","last_reported":"2024-06-10T00:58:16.159976+00:00","last_updated":"2024-06-10T00:58:16.159976+00:00","context":{"id":"01HZZTEA6B5KWYDBZ0NWS3B42R","parent_id":null,"user_id":null}},
 ./core.restore_state-241-      "extra_data": null,
-./core.restore_state-242-      "last_seen": "2024-06-09T23:58:48.214233+00:00"
+./core.restore_state-242-      "last_seen": "2024-06-10T01:02:12.946551+00:00"
 ./core.restore_state-243-    },
 ./core.restore_state-244-    {
-./core.restore_state-245-      "state": {"entity_id":"input_text.puttexthere","state":"8 2024-06-09 18:58:45.367831-05:00","attributes":{"editable":true,"min":0,"max":100,"pattern":null,"mode":"text","friendly_name":"puttexthere"},"last_changed":"2024-06-09T23:58:45.376305+00:00","last_reported":"2024-06-09T23:58:45.376305+00:00","last_updated":"2024-06-09T23:58:45.376305+00:00","context":{"id":"01HZZQ1B3KD3V2R7BE1H5VAP58","parent_id":null,"user_id":null}},
+./core.restore_state:245:      "state": {"entity_id":"input_datetime.bed_sensor_alarm_clock","state":"12:00:00","attributes":{"has_date":false,"has_time":true,"editable":true,"hour":12,"minute":0,"second":0,"timestamp":43200,"icon":"mdi:bed-clock","friendly_name":"Alarm Time"},"last_changed":"2024-06-09T21:21:19.286650+00:00","last_reported":"2024-06-09T21:21:19.286650+00:00","last_updated":"2024-06-09T21:21:19.286650+00:00","context":{"id":"01HZZE12DNHS0BNNW4EP0Q79MN","parent_id":null,"user_id":"6ab11609e44440659ba1ae805962fd34"}},
 ./core.restore_state-246-      "extra_data": null,
-./core.restore_state-247-      "last_seen": "2024-06-09T23:59:01.007936+00:00"
+./core.restore_state-247-      "last_seen": "2024-06-09T21:33:20.873465+00:00"
 ./core.restore_state-248-    },
 ./core.restore_state-249-    {
-./core.restore_state:250:      "state": {"entity_id":"automation.bed_sensor_alarm_mqtt_2","state":"on","attributes":{"id":"1717981226071","last_triggered":null,"mode":"single","current":0,"friendly_name":"Bed Sensor Alarm MQTT - Time"},"last_changed":"2024-06-10T01:01:18.128241+00:00","last_reported":"2024-06-10T01:01:18.128241+00:00","last_updated":"2024-06-10T01:01:18.128241+00:00","context":{"id":"01HZZTKVXGKPT1QR78R0ET2335","parent_id":null,"user_id":null}},
+./core.restore_state:250:      "state": {"entity_id":"input_boolean.bed_sensor_alarm_armed","state":"on","attributes":{"editable":true,"icon":"mdi:alarm-check","friendly_name":"Alarm Enable"},"last_changed":"2024-06-09T21:21:20.045592+00:00","last_reported":"2024-06-09T21:34:27.386297+00:00","last_updated":"2024-06-09T21:34:27.386297+00:00","context":{"id":"01HZZES41T9YY9MJT0664TA20F","parent_id":null,"user_id":null}},
 ./core.restore_state-251-      "extra_data": null,
-./core.restore_state-252-      "last_seen": "2024-06-10T01:01:59.595792+00:00"
-./core.restore_state-253-    }
-./core.restore_state-254-  ]
-./core.restore_state-255-}
+./core.restore_state-252-      "last_seen": "2024-06-09T21:34:27.401386+00:00"
+./core.restore_state-253-    },
+./core.restore_state-254-    {
+./core.restore_state-255-      "state": {"entity_id":"input_boolean.enable_alarm","state":"off","attributes":{"editable":true,"icon":"mdi:alarm-check","friendly_name":"Enable Alarm"},"last_changed":"2024-06-09T21:36:15.307115+00:00","last_reported":"2024-06-09T21:37:12.710413+00:00","last_updated":"2024-06-09T21:36:15.307115+00:00","context":{"id":"01HZZEWDEB18XHZFGB73R1ZCS3","parent_id":null,"user_id":null}},
+./core.restore_state-256-      "extra_data": null,
+./core.restore_state-257-      "last_seen": "2024-06-09T21:37:12.718595+00:00"
+./core.restore_state-258-    },
+./core.restore_state-259-    {
+./core.restore_state-260-      "state": {"entity_id":"automation.write_the_time","state":"on","attributes":{"id":"1717973184629","last_triggered":"2024-06-09T23:58:45.364619+00:00","mode":"single","current":0,"friendly_name":"00 write the time"},"last_changed":"2024-06-09T23:07:56.291692+00:00","last_reported":"2024-06-09T23:58:45.377068+00:00","last_updated":"2024-06-09T23:58:45.377068+00:00","context":{"id":"01HZZQ1B3KD3V2R7BE1H5VAP58","parent_id":null,"user_id":null}},
+./core.restore_state-261-      "extra_data": null,
+./core.restore_state-262-      "last_seen": "2024-06-09T23:58:48.214233+00:00"
+./core.restore_state-263-    },
+./core.restore_state-264-    {
+./core.restore_state-265-      "state": {"entity_id":"input_text.puttexthere","state":"8 2024-06-09 18:58:45.367831-05:00","attributes":{"editable":true,"min":0,"max":100,"pattern":null,"mode":"text","friendly_name":"puttexthere"},"last_changed":"2024-06-09T23:58:45.376305+00:00","last_reported":"2024-06-09T23:58:45.376305+00:00","last_updated":"2024-06-09T23:58:45.376305+00:00","context":{"id":"01HZZQ1B3KD3V2R7BE1H5VAP58","parent_id":null,"user_id":null}},
+./core.restore_state-266-      "extra_data": null,
+./core.restore_state-267-      "last_seen": "2024-06-09T23:59:01.007936+00:00"
+./core.restore_state-268-    },
+./core.restore_state-269-    {
+./core.restore_state:270:      "state": {"entity_id":"automation.bed_sensor_alarm_mqtt_2","state":"on","attributes":{"id":"1717981226071","last_triggered":null,"mode":"single","current":0,"friendly_name":"Bed Sensor Alarm MQTT - Time"},"last_changed":"2024-06-10T01:01:18.128241+00:00","last_reported":"2024-06-10T01:01:18.128241+00:00","last_updated":"2024-06-10T01:01:18.128241+00:00","context":{"id":"01HZZTKVXGKPT1QR78R0ET2335","parent_id":null,"user_id":null}},
+./core.restore_state-271-      "extra_data": null,
+./core.restore_state-272-      "last_seen": "2024-06-10T01:01:59.595792+00:00"
+./core.restore_state-273-    },
+./core.restore_state-274-    {
+./core.restore_state-275-      "state": {"entity_id":"input_button.suspend_alarm_until_tomorrow","state":"unknown","attributes":{"editable":true,"icon":"mdi:alarm-off","friendly_name":"Suspend Alarm (until tomorrow)"},"last_changed":"2024-06-10T19:18:05.046808+00:00","last_reported":"2024-06-10T19:18:29.504990+00:00","last_updated":"2024-06-10T19:18:05.046808+00:00","context":{"id":"01J01SC4FPP6QTSZ8VVD8YYY8D","parent_id":null,"user_id":null}},
+./core.restore_state-276-      "extra_data": null,
+./core.restore_state-277-      "last_seen": "2024-06-10T19:18:29.537682+00:00"
+./core.restore_state-278-    },
+./core.restore_state-279-    {
+./core.restore_state:280:      "state": {"entity_id":"input_button.bed_sensor_alarm_suspend_until_tomorrow","state":"unknown","attributes":{"editable":true,"icon":"mdi:alarm-off","friendly_name":"Suspend Alarm (until tomorrow)"},"last_changed":"2024-06-10T19:18:29.539215+00:00","last_reported":"2024-06-10T19:18:29.539215+00:00","last_updated":"2024-06-10T19:18:29.539215+00:00","context":{"id":"01J01SCWD3Y1X6YPT9QFH63M61","parent_id":null,"user_id":null}},
+./core.restore_state-281-      "extra_data": null,
+./core.restore_state-282-      "last_seen": "2024-06-10T19:47:39.954561+00:00"
+./core.restore_state-283-    },
+./core.restore_state-284-    {
+./core.restore_state-285-      "state": {"entity_id":"input_button.suspend_alarm_8_hours","state":"unknown","attributes":{"editable":true,"icon":"mdi:alarm-note-off","friendly_name":"Suspend Alarm (8 hours)"},"last_changed":"2024-06-10T19:49:03.603726+00:00","last_reported":"2024-06-10T19:49:27.147665+00:00","last_updated":"2024-06-10T19:49:03.603726+00:00","context":{"id":"01J01V4VFK2AASNM0T8QMR2MWF","parent_id":null,"user_id":null}},
+./core.restore_state-286-      "extra_data": null,
+./core.restore_state-287-      "last_seen": "2024-06-10T19:49:27.226576+00:00"
+./core.restore_state-288-    }
+./core.restore_state-289-  ]
+./core.restore_state-290-}
 --
 ./trace.saved_traces-77-              {
 ./trace.saved_traces-78-                "platform": "time",
@@ -1273,19 +1308,24 @@
 ./core.entity_registry-364-      {"aliases":[],"area_id":null,"categories":{},"capabilities":null,"config_entry_id":"7d01f0eeb8d21ec03da0942f1eddc2bd","device_class":null,"device_id":"18984f6a9042b18f03fea0e49b8680f2","disabled_by":"integration","entity_category":"config","entity_id":"switch.pixel_8_pro_allowed_on_network_2","hidden_by":null,"icon":null,"id":"600f781c1fa9c1cf98a7a13b6fdbaa16","has_entity_name":true,"labels":[],"name":null,"options":{},"original_device_class":null,"original_icon":null,"original_name":"Allowed on network","platform":"netgear","supported_features":0,"translation_key":"allowed_on_network","unique_id":"16:a7:8a:35:ed:79-allow_or_block","previous_unique_id":null,"unit_of_measurement":null},
 ./core.entity_registry:365:      {"aliases":[],"area_id":"basement","categories":{},"capabilities":{"has_date":false,"has_time":true},"config_entry_id":null,"device_class":null,"device_id":null,"disabled_by":null,"entity_category":null,"entity_id":"input_datetime.bed_sensor_alarm_time","hidden_by":null,"icon":null,"id":"3301490db3f555909577e48378fa2d5e","has_entity_name":false,"labels":["bedsensor"],"name":null,"options":{"conversation":{"should_expose":false}},"original_device_class":null,"original_icon":"mdi:bed-clock","original_name":"Alarm Time","platform":"input_datetime","supported_features":0,"translation_key":null,"unique_id":"bed_sensor_alarm_clock","previous_unique_id":null,"unit_of_measurement":null},
 ./core.entity_registry:366:      {"aliases":[],"area_id":"basement","categories":{},"capabilities":null,"config_entry_id":null,"device_class":null,"device_id":null,"disabled_by":null,"entity_category":null,"entity_id":"input_boolean.bed_sensor_alarm_enable","hidden_by":null,"icon":null,"id":"ed9671252ca26fed486484ff1669c4c4","has_entity_name":false,"labels":["bedsensor"],"name":null,"options":{"conversation":{"should_expose":false}},"original_device_class":null,"original_icon":"mdi:alarm-check","original_name":"Enable Alarm","platform":"input_boolean","supported_features":0,"translation_key":null,"unique_id":"enable_alarm","previous_unique_id":null,"unit_of_measurement":null},
-./core.entity_registry:367:      {"aliases":[],"area_id":null,"categories":{},"capabilities":{"id":"1717981226071"},"config_entry_id":null,"device_class":null,"device_id":null,"disabled_by":null,"entity_category":null,"entity_id":"automation.bed_sensor_alarm_mqtt_time","hidden_by":null,"icon":"mdi:bed-clock","id":"bb7e4f0efa5fe8b29ff2e2cf555bd243","has_entity_name":false,"labels":["bedsensor"],"name":null,"options":{"conversation":{"should_expose":false}},"original_device_class":null,"original_icon":null,"original_name":"Bed Sensor Alarm MQTT - Time","platform":"automation","supported_features":0,"translation_key":null,"unique_id":"1717981226071","previous_unique_id":null,"unit_of_measurement":null},
+./core.entity_registry:367:      {"aliases":[],"area_id":"basement","categories":{},"capabilities":{"id":"1717981226071"},"config_entry_id":null,"device_class":null,"device_id":null,"disabled_by":null,"entity_category":null,"entity_id":"automation.bed_sensor_alarm_mqtt_time","hidden_by":"user","icon":"mdi:bed-clock","id":"bb7e4f0efa5fe8b29ff2e2cf555bd243","has_entity_name":false,"labels":["bedsensor"],"name":null,"options":{"conversation":{"should_expose":false}},"original_device_class":null,"original_icon":null,"original_name":"Bed Sensor Alarm MQTT - Time","platform":"automation","supported_features":0,"translation_key":null,"unique_id":"1717981226071","previous_unique_id":null,"unit_of_measurement":null},
 ./core.entity_registry:368:      {"aliases":[],"area_id":"basement","categories":{},"capabilities":{"id":"1717969069479"},"config_entry_id":null,"device_class":null,"device_id":null,"disabled_by":null,"entity_category":null,"entity_id":"automation.bed_sensor_alarm_mqtt_enable","hidden_by":"user","icon":"mdi:bed-clock","id":"2f87267c7cbf7744c0276577234546df","has_entity_name":false,"labels":["bedsensor"],"name":null,"options":{"conversation":{"should_expose":false}},"original_device_class":null,"original_icon":null,"original_name":"Bed Sensor Alarm MQTT - Enable","platform":"automation","supported_features":0,"translation_key":null,"unique_id":"1717969069479","previous_unique_id":null,"unit_of_measurement":null},
-./core.entity_registry:369:      {"aliases":[],"area_id":null,"categories":{},"capabilities":null,"config_entry_id":"40d958140aca19aea6c696b66a6bc48a","device_class":null,"device_id":null,"disabled_by":null,"entity_category":null,"entity_id":"sensor.bed_sensor_alarm_next","hidden_by":null,"icon":"mdi:clock-end","id":"6ce917fb2ed36e3c76482969601a1aee","has_entity_name":false,"labels":[],"name":null,"options":{"conversation":{"should_expose":false}},"original_device_class":"timestamp","original_icon":null,"original_name":"Next Alarm Time","platform":"template","supported_features":0,"translation_key":null,"unique_id":"40d958140aca19aea6c696b66a6bc48a","previous_unique_id":null,"unit_of_measurement":null}
-./core.entity_registry-370-    ],
-./core.entity_registry-371-    "deleted_entities": [
-./core.entity_registry-372-      {"config_entry_id":"ea6ffa1ff1e90f63b2fb085e47923c40","entity_id":"weather.forecast_home_hourly","id":"c0dc62d7b2f31b54168d12d90d52a1d5","orphaned_timestamp":null,"platform":"met","unique_id":"home-hourly"},
-./core.entity_registry:373:      {"config_entry_id":null,"entity_id":"input_boolean.bed_sensor_alarm_enable","id":"917b723d26e6bdec515a410ca4621b27","orphaned_timestamp":1717968946.3637931,"platform":"input_boolean","unique_id":"bed_sensor_alarm_armed"},
-./core.entity_registry-374-      {"config_entry_id":null,"entity_id":"sensor.next_leave_for_work","id":"5845e584b9a16d7b72d5cdecf3d5366e","orphaned_timestamp":1717973422.7642336,"platform":"template","unique_id":"a7959f9bd89bdbdc1dbafccd4504b245"},
-./core.entity_registry-375-      {"config_entry_id":null,"entity_id":"automation.write_the_time","id":"4a2f366b27de3764364a15c402899ffa","orphaned_timestamp":1717977528.2127814,"platform":"automation","unique_id":"1717973184629"},
-./core.entity_registry-376-      {"config_entry_id":null,"entity_id":"input_text.puttexthere","id":"de6422f91568591b545d579c6df5f978","orphaned_timestamp":1717977541.0064704,"platform":"input_text","unique_id":"puttexthere"}
-./core.entity_registry-377-    ]
-./core.entity_registry-378-  }
-./core.entity_registry-379-}
+./core.entity_registry:369:      {"aliases":[],"area_id":"basement","categories":{},"capabilities":null,"config_entry_id":"40d958140aca19aea6c696b66a6bc48a","device_class":null,"device_id":null,"disabled_by":null,"entity_category":null,"entity_id":"sensor.bed_sensor_alarm_next","hidden_by":null,"icon":"mdi:clock-end","id":"6ce917fb2ed36e3c76482969601a1aee","has_entity_name":false,"labels":["bedsensor"],"name":null,"options":{"conversation":{"should_expose":false}},"original_device_class":"timestamp","original_icon":null,"original_name":"Next Alarm Time","platform":"template","supported_features":0,"translation_key":null,"unique_id":"40d958140aca19aea6c696b66a6bc48a","previous_unique_id":null,"unit_of_measurement":null},
+./core.entity_registry:370:      {"aliases":[],"area_id":"basement","categories":{},"capabilities":null,"config_entry_id":null,"device_class":null,"device_id":null,"disabled_by":null,"entity_category":null,"entity_id":"input_button.snooze_alarm_10_min","hidden_by":null,"icon":null,"id":"db51c76216a4ec7cf61b1938a023508d","has_entity_name":false,"labels":["bedsensor"],"name":null,"options":{"conversation":{"should_expose":false}},"original_device_class":null,"original_icon":"mdi:alarm-snooze","original_name":"Snooze Alarm (10 min)","platform":"input_button","supported_features":0,"translation_key":null,"unique_id":"snooze_alarm_10_min","previous_unique_id":null,"unit_of_measurement":null},
+./core.entity_registry:371:      {"aliases":[],"area_id":"basement","categories":{},"capabilities":null,"config_entry_id":null,"device_class":null,"device_id":null,"disabled_by":null,"entity_category":null,"entity_id":"input_button.bed_sensor_alarm_suspend","hidden_by":null,"icon":null,"id":"f4e68d5da7e8172a37b682f15d1bc80f","has_entity_name":false,"labels":["bedsensor"],"name":null,"options":{"conversation":{"should_expose":false}},"original_device_class":null,"original_icon":"mdi:alarm-note-off","original_name":"Suspend Alarm (8 hours)","platform":"input_button","supported_features":0,"translation_key":null,"unique_id":"suspend_alarm_8_hours","previous_unique_id":null,"unit_of_measurement":null},
+./core.entity_registry:372:      {"aliases":[],"area_id":"basement","categories":{},"capabilities":{"id":"1718049801359"},"config_entry_id":null,"device_class":null,"device_id":null,"disabled_by":null,"entity_category":null,"entity_id":"automation.bed_sensor_alarm_mqtt_snooze","hidden_by":"user","icon":"mdi:bed-clock","id":"4cd7cbc53b76d25bc5af6da4d4e3f516","has_entity_name":false,"labels":["bedsensor"],"name":null,"options":{"conversation":{"should_expose":false}},"original_device_class":null,"original_icon":null,"original_name":"Bed Sensor Alarm MQTT - Snooze","platform":"automation","supported_features":0,"translation_key":null,"unique_id":"1718049801359","previous_unique_id":null,"unit_of_measurement":null},
+./core.entity_registry:373:      {"aliases":[],"area_id":"basement","categories":{},"capabilities":{"id":"1718049901931"},"config_entry_id":null,"device_class":null,"device_id":null,"disabled_by":null,"entity_category":null,"entity_id":"automation.bed_sensor_alarm_mqtt_suspend","hidden_by":"user","icon":"mdi:bed-clock","id":"ae107f2da014e68c31d404f2188c2853","has_entity_name":false,"labels":["bedsensor"],"name":null,"options":{"conversation":{"should_expose":false}},"original_device_class":null,"original_icon":null,"original_name":"Bed Sensor Alarm MQTT - Suspend","platform":"automation","supported_features":0,"translation_key":null,"unique_id":"1718049901931","previous_unique_id":null,"unit_of_measurement":null}
+./core.entity_registry-374-    ],
+./core.entity_registry-375-    "deleted_entities": [
+./core.entity_registry-376-      {"config_entry_id":"ea6ffa1ff1e90f63b2fb085e47923c40","entity_id":"weather.forecast_home_hourly","id":"c0dc62d7b2f31b54168d12d90d52a1d5","orphaned_timestamp":null,"platform":"met","unique_id":"home-hourly"},
+./core.entity_registry:377:      {"config_entry_id":null,"entity_id":"input_boolean.bed_sensor_alarm_enable","id":"917b723d26e6bdec515a410ca4621b27","orphaned_timestamp":1717968946.3637931,"platform":"input_boolean","unique_id":"bed_sensor_alarm_armed"},
+./core.entity_registry-378-      {"config_entry_id":null,"entity_id":"sensor.next_leave_for_work","id":"5845e584b9a16d7b72d5cdecf3d5366e","orphaned_timestamp":1717973422.7642336,"platform":"template","unique_id":"a7959f9bd89bdbdc1dbafccd4504b245"},
+./core.entity_registry-379-      {"config_entry_id":null,"entity_id":"automation.write_the_time","id":"4a2f366b27de3764364a15c402899ffa","orphaned_timestamp":1717977528.2127814,"platform":"automation","unique_id":"1717973184629"},
+./core.entity_registry-380-      {"config_entry_id":null,"entity_id":"input_text.puttexthere","id":"de6422f91568591b545d579c6df5f978","orphaned_timestamp":1717977541.0064704,"platform":"input_text","unique_id":"puttexthere"},
+./core.entity_registry:381:      {"config_entry_id":null,"entity_id":"input_button.bed_sensor_alarm_suspend","id":"348b0ab8c9ff2f924f8a580d2cdfab6e","orphaned_timestamp":1718048912.742574,"platform":"input_button","unique_id":"suspend_alarm_until_tomorrow"}
+./core.entity_registry-382-    ]
+./core.entity_registry-383-  }
+./core.entity_registry-384-}
 --
 ./core.area_registry-18-        "name": "Kitchen",
 ./core.area_registry-19-        "id": "kitchen",
@@ -1383,14 +1423,21 @@
 ./lovelace:70:                  "entity": "input_boolean.bed_sensor_alarm_enable"
 ./lovelace-71-                },
 ./lovelace-72-                {
-./lovelace:73:                  "entity": "input_datetime.bed_sensor_alarm_time"
-./lovelace-74-                }
-./lovelace-75-              ],
-./lovelace-76-              "title": "Basement",
-./lovelace-77-              "state_color": true
-./lovelace-78-            },
-./lovelace-79-            {
-./lovelace-80-              "type": "entities",
-./lovelace-81-              "entities": [
-./lovelace-82-                {
-./lovelace-83-                  "entity": "binary_sensor.furnace_filter"
+./lovelace:73:                  "entity": "input_datetime.bed_sensor_alarm_time",
+./lovelace-74-                  "icon": "mdi:clock-digital"
+./lovelace-75-                },
+./lovelace-76-                {
+./lovelace-77-                  "entity": "input_button.snooze_alarm_10_min"
+./lovelace-78-                },
+./lovelace-79-                {
+./lovelace:80:                  "entity": "input_button.bed_sensor_alarm_suspend"
+./lovelace-81-                }
+./lovelace-82-              ],
+./lovelace-83-              "title": "Basement",
+./lovelace-84-              "state_color": true
+./lovelace-85-            },
+./lovelace-86-            {
+./lovelace-87-              "type": "entities",
+./lovelace-88-              "entities": [
+./lovelace-89-                {
+./lovelace-90-                  "entity": "binary_sensor.furnace_filter"

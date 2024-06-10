@@ -18,7 +18,6 @@ AudioFileSourceSPIFFS *file;
 AudioGeneratorAAC *aac;
 AudioOutputI2SNoDAC *out;
 void setup_sound();
-void play_sound();
 
 // NTP Time
 #include "NTPClient.h"
@@ -32,13 +31,17 @@ void update_time();
 #include "PubSubClient.h"
 #define TOPIC_TIME "homeassistant/device/bedalarm/time"
 #define TOPIC_ENABLE "homeassistant/device/bedalarm/enable"
+#define TOPIC_ENABLE "homeassistant/device/bedalarm/snooze"
 PubSubClient mqttClient(wifiClient);
 void setup_mqtt();
 void callback_mqtt(char*, byte*, unsigned int);
 
 // Alarm Itself
 bool alarmEnabled = false;
+bool alarmingNow = false;
+bool bedOccupied = true; // debug temporary TODO FIXME
 time_t alarmTime = 0;
+time_t snoozeTime = 0;
 void print_times();
 void check_alarm();
 
@@ -46,9 +49,9 @@ void setup()
 {
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(115200);
-  while(!Serial) {}; //wait
+  while(!Serial) {}; // wait
   setup_wifi();
-  digitalWrite(LED_BUILTIN, LOW); //pullup means 0 is full brightness
+  digitalWrite(LED_BUILTIN, LOW); // there's a pullup on this pin, so 0 is full brightness
   timeClient.begin();
   timeClient.update();
   setup_sound();
@@ -57,16 +60,14 @@ void setup()
 
 void loop()
 {
-  if (aac->isRunning()) {   // need to continually loop without delay during playback
+  mqttClient.loop();                        // need to receive mqtt to know if snooze happened
+  check_alarm();                            // need to evaluate whether we should be alarming
+  if (aac->isRunning()) {                   // need to continually loop without delay during playback
      aac->loop();
   } else {
     update_time();
     print_times();
-    check_alarm();
-
-
-    mqttClient.loop();
-    delay(1000);
+    delay(1000);                            // only delay while not playing audio
   }
 }
 
@@ -106,7 +107,7 @@ void setup_mqtt() {
       delay(5000);
     }
   }
-  if (mqttClient.subscribe("homeassistant/device/bedalarm/time", 1)) {    //unix timestamp of next alarm time
+  if (mqttClient.subscribe("homeassistant/device/bedalarm/time", 1)) {    //unix timestamp of next alarm time, 10m delay at rollover before sending tomorrow's date
     Serial.println("Subscribed to time");
   } else {
     Serial.println("Couldn't subscribe to alarm time");
@@ -115,6 +116,11 @@ void setup_mqtt() {
     Serial.println("Subscribed to enable");
   } else {
     Serial.println("Couldn't subscribe to alarm enable");
+  }
+  if (mqttClient.subscribe("homeassistant/device/bedalarm/snooze", 1)) {    //unix timestamp of end of most recently requested snooze/suspend
+    Serial.println("Subscribed to snooze");
+  } else {
+    Serial.println("Couldn't subscribe to alarm snooze");
   }
 }
 
@@ -141,6 +147,10 @@ void callback_mqtt(char* topic, byte* payload, unsigned int length) {
   if (strcmp(topic, TOPIC_TIME) == 0) {
     alarmTime = atoi((char*)payload);
   }
+  if (strcmp(topic, TOPIC_SNOOZE) == 0) {
+    snoozeTime = atoi((char*)payload);
+    //if (snoozeTime > now()) alarmingNow = false;  // should be redundant with check_alarm() 
+  }
 }
 
 void setup_sound() {
@@ -150,10 +160,6 @@ void setup_sound() {
   audioLogger = &Serial;
   aac = new AudioGeneratorAAC();
   out = new AudioOutputI2SNoDAC();
-}
-
-void play_sound() {
-  aac->begin(file, out);
 }
 
 void update_time() {
@@ -181,7 +187,13 @@ void print_times() {
 }
 
 void check_alarm() {
-  if (alarmEnabled) {
-    if (now())>
+  if (alarmEnabled && now()>alarmTime && now()>snoozeTime && bedOccupied) {
+    alarmingNow = true;
+    if (!aac->isRunning()) {
+      aac->begin(file, out);  //start or restart playback when not playing. Should restart immediately without a 1000ms delay given ordering of loop()
+    }
+  } else if (alarmingNow && (now()<snoozeTime || bedOccupied==false)) {  //don't use 1) toggling because of risk of not reenabling 2) time because of rollover behavior
+    alarmingNow = false;
+    aac->stop();
   }
 }
