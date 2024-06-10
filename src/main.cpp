@@ -106,12 +106,12 @@ void setup_mqtt() {
       delay(5000);
     }
   }
-  if (mqttClient.subscribe("homeassistant/device/bedalarm/time", 1)) {
+  if (mqttClient.subscribe("homeassistant/device/bedalarm/time", 1)) {    //unix timestamp of next alarm time
     Serial.println("Subscribed to time");
   } else {
     Serial.println("Couldn't subscribe to alarm time");
   }
-  if (mqttClient.subscribe("homeassistant/device/bedalarm/enable", 1)) {
+  if (mqttClient.subscribe("homeassistant/device/bedalarm/enable", 1)) {  //string "on" or "off" 
     Serial.println("Subscribed to enable");
   } else {
     Serial.println("Couldn't subscribe to alarm enable");
@@ -182,6 +182,6 @@ void print_times() {
 
 void check_alarm() {
   if (alarmEnabled) {
-    
+    if (now())>
   }
 }
