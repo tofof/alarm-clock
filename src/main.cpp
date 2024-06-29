@@ -27,6 +27,7 @@ void setup_sound();
 NTPClient timeClient(ntpUDP, "us.pool.ntp.org", 0, 20*MILLI_PER_MIN);
 void setup_ntp();
 void update_time();
+unsigned long nextTime = 0;
 
 // MQTT
 #include "PubSubClient.h"
@@ -63,35 +64,35 @@ void setup()
 {
   Serial.begin(115200);
   while(!Serial) {}; // wait
-  //setup_wifi();
-  //timeClient.begin();
-  //timeClient.update();
+  setup_wifi();
+  timeClient.begin();
+  timeClient.update();
   setup_sound();
   display.setBrightness(BRIGHT_7);
   pinMode(PRESSURE_PIN, INPUT);
-  //setup_mqtt();
+  setup_mqtt();
 }
 
 void loop()
 {
-  //if (WiFi.status() != WL_CONNECTED) setup_wifi();
-  //if (!mqttClient.connected()) setup_mqtt();
-  //mqttClient.loop();                        // need to receive mqtt to know if snooze happened
+  if (millis() > nextTime) {
+    if (WiFi.status() != WL_CONNECTED) setup_wifi();
+    if (!mqttClient.connected()) setup_mqtt();
+    mqttClient.loop();                        // need to receive mqtt to know if snooze happened
+    print_times();
+    display.showNumber(pressure);
+    nextTime = millis() + 1000;
+  }
+  check_alarm();                            // need to evaluate whether we should be alarming
   update_pressure();
-  //check_alarm();                            // need to evaluate whether we should be alarming
   if (mp3->isRunning()) {                   // need to continually loop without delay during playback
     if (!mp3->loop()) {
       Serial.println("Audio stopped");
       mp3->stop();
-      delete file;
-      delete mp3;
-      delete out;
-      setup_sound();
     }
     //Serial.println("Wake up! Rise and shine!");
   } else {
-    //update_time();
-    //print_times();
+    update_time();
     delay(100);                            // only delay while not playing audio
   }
 }
@@ -99,8 +100,6 @@ void loop()
 void update_pressure() {
   pressure = (pressure*9 + analogRead(PRESSURE_PIN))/10;  //smoothing
   bedOccupied = pressure > PRESSURE_THRESHOLD;
-  display.showNumber(analogRead(PRESSURE_PIN));
-  Serial.println(pressure);
 }
 
 void setup_sound() {
@@ -225,10 +224,12 @@ void check_alarm() {
   if (alarmEnabled && now()>alarmTime && now()>snoozeTime && bedOccupied) {
     alarmingNow = true;
     if (!mp3->isRunning()) {
+      setup_sound();
       mp3->begin(file, out);  //start or restart playback when not playing. Should restart immediately without a 1000ms delay given ordering of loop()
     }
   } else if (alarmingNow && (now()<snoozeTime || bedOccupied==false)) {  //don't use 1) toggling because of risk of not reenabling 2) time because of rollover behavior
     alarmingNow = false;
     mp3->stop();
+    count = 0;  //Reset volume
   }
 }
