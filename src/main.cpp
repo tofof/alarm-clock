@@ -62,13 +62,13 @@ TM1637TinyDisplay display(CLK, DIO);
 
 void setup()
 {
-  Serial.begin(115200);
-  while(!Serial) {}; // wait
+  //Serial.begin(115200);
+  //while(!Serial) {}; // wait
+  display.setBrightness(BRIGHT_2);
   setup_wifi();
   timeClient.begin();
   timeClient.update();
   setup_sound();
-  display.setBrightness(BRIGHT_7);
   pinMode(PRESSURE_PIN, INPUT);
   setup_mqtt();
 }
@@ -79,7 +79,7 @@ void loop()
     if (WiFi.status() != WL_CONNECTED) setup_wifi();
     if (!mqttClient.connected()) setup_mqtt();
     mqttClient.loop();                        // need to receive mqtt to know if snooze happened
-    print_times();
+    //print_times();
     display.showNumber(pressure);
     nextTime = millis() + 1000;
   }
@@ -87,7 +87,7 @@ void loop()
   update_pressure();
   if (mp3->isRunning()) {                   // need to continually loop without delay during playback
     if (!mp3->loop()) {
-      Serial.println("Audio stopped");
+      //Serial.println("Audio stopped");
       mp3->stop();
     }
     //Serial.println("Wake up! Rise and shine!");
@@ -115,14 +115,15 @@ void setup_sound() {
 
 
 void setup_wifi() {
-  Serial.println();
+  display.showString("WIFI");
+  //Serial.println();
   WiFi.hostname("AlarmClock");
   WiFi.setPhyMode(WIFI_PHY_MODE_11B);
-  Serial.print("Connecting to ");
-  Serial.print(WIFI_SSID);
+  //Serial.print("Connecting to ");
+  //Serial.print(WIFI_SSID);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
-    Serial.print(".");
+    //Serial.print(".");
     digitalWrite(LED_BUILTIN, LOW);
     delay(250);
     digitalWrite(LED_BUILTIN, HIGH);
@@ -130,51 +131,52 @@ void setup_wifi() {
   }
   WiFi.setAutoReconnect(true);
   WiFi.persistent(true);
-  Serial.print(" WiFi connected on IP address ");
-  Serial.println(WiFi.localIP());
+  //Serial.print(" WiFi connected on IP address ");
+  //Serial.println(WiFi.localIP());
   delay(1000);
 }
 
 void setup_mqtt() {
+  display.showString("MQTT");
   mqttClient.setServer(MQTT_Server, MQTT_Port);
   mqttClient.setCallback(callback_mqtt);
   while (!mqttClient.connected()) {
-    Serial.print("Attempting MQTT connection...");
+    //Serial.print("Attempting MQTT connection...");
     String mqttClientId = "bedalarm8266";
     if (mqttClient.connect(mqttClientId.c_str(), MQTT_User, MQTT_Password)) {
-      Serial.println("connected");
+      //Serial.println("connected");
     } else {
-      Serial.print("failed, rc=");
-      Serial.print(mqttClient.state());
-      Serial.println(" will try again in 5 seconds");
+      //Serial.print("failed, rc=");
+      //Serial.print(mqttClient.state());
+      //Serial.println(" will try again in 5 seconds");
       delay(5000);
     }
   }
   if (mqttClient.subscribe("homeassistant/device/bedalarm/time", 1)) {    //unix timestamp of next alarm time, 10m delay at rollover before sending tomorrow's date
-    Serial.println("Subscribed to time");
+    //Serial.println("Subscribed to time");
   } else {
-    Serial.println("Couldn't subscribe to alarm time");
+    //Serial.println("Couldn't subscribe to alarm time");
   }
   if (mqttClient.subscribe("homeassistant/device/bedalarm/enable", 1)) {  //string "on" or "off" 
-    Serial.println("Subscribed to enable");
+    //Serial.println("Subscribed to enable");
   } else {
-    Serial.println("Couldn't subscribe to alarm enable");
+    //Serial.println("Couldn't subscribe to alarm enable");
   }
   if (mqttClient.subscribe("homeassistant/device/bedalarm/snooze", 1)) {    //unix timestamp of end of most recently requested snooze/suspend
-    Serial.println("Subscribed to snooze");
+    //Serial.println("Subscribed to snooze");
   } else {
-    Serial.println("Couldn't subscribe to alarm snooze");
+    //Serial.println("Couldn't subscribe to alarm snooze");
   }
 }
 
 void callback_mqtt(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-  for (unsigned int i=0;i<length;i++) {
-    Serial.print((char)payload[i]);
-  }
-  Serial.println();
+  // Serial.print("Message arrived [");
+  // Serial.print(topic);
+  // Serial.print("] ");
+  // for (unsigned int i=0;i<length;i++) {
+  //   Serial.print((char)payload[i]);
+  // }
+  // Serial.println();
 
   if (strcmp(topic, TOPIC_ENABLE) == 0) {
     if (payload[1] == 'n') { // "oN"
@@ -182,9 +184,9 @@ void callback_mqtt(char* topic, byte* payload, unsigned int length) {
     } else if (payload[1] == 'f')  { // "oFf"
       alarmEnabled = false;
     } else {
-      Serial.print("ERROR received '");
-      for (unsigned int i=0;i<length;i++) Serial.print((char)payload[i]);
-      Serial.println("'");
+      // Serial.print("ERROR received '");
+      //for (unsigned int i=0;i<length;i++) Serial.print((char)payload[i]);
+      //Serial.println("'");
     }
   }
   if (strcmp(topic, TOPIC_TIME) == 0) {
@@ -198,27 +200,27 @@ void callback_mqtt(char* topic, byte* payload, unsigned int length) {
 
 void update_time() {
   if(now() < SECS_YR_2000) {
-    Serial.println("Forcing time initialization");
+    //Serial.println("Forcing time initialization");
     while(!timeClient.forceUpdate()) {};
     setTime(timeClient.getEpochTime());
   }
   if(timeClient.update()) { //uses interval specified at initialization
-    Serial.println("Time Updated");
+    //Serial.println("Time Updated");
     setTime(timeClient.getEpochTime());
   }
 }
 
-void print_times() {
-  Serial.print(now());
-  Serial.print("    Alarm at ");
-  Serial.print(alarmTime);
-  Serial.print(" ");
-  Serial.print(alarmEnabled);
-  Serial.print(" in ");
-  Serial.print((alarmTime-now())/SECS_PER_HOUR);
-  Serial.print(" hours.");
-  Serial.println();
-}
+// void print_times() {
+//   Serial.print(now());
+//   Serial.print("    Alarm at ");
+//   Serial.print(alarmTime);
+//   Serial.print(" ");
+//   Serial.print(alarmEnabled);
+//   Serial.print(" in ");
+//   Serial.print((alarmTime-now())/SECS_PER_HOUR);
+//   Serial.print(" hours.");
+//   Serial.println();
+// }
 
 void check_alarm() {
   if (alarmEnabled && now()>alarmTime && now()>snoozeTime && bedOccupied) {
