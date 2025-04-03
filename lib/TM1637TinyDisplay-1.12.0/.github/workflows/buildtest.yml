@@ -1,0 +1,31 @@
+# Test TM1637TinyDisplay Library
+name: BuildTest
+
+# Triggers the workflow on push or pull request events 
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install arduino-cli
+        run: brew update && brew install arduino-cli
+      - name: Install core
+        run: arduino-cli core install arduino:avr
+      - name: Install libraries
+        run: arduino-cli lib install ArduinoJson
+      - name: Build TM1637Test.ino Example Sketch
+        run: arduino-cli compile --library . --warnings all -b arduino:avr:uno "examples/TM1637Test/TM1637Test.ino"
+      - name: Build TM1637-6Digit-Test.ino Example Sketch
+        run: arduino-cli compile --library . --warnings all -b arduino:avr:uno "examples/TM1637-6Digit-Test/TM1637-6Digit-Test.ino"
+      - name: Build ATtiny85.ino Example Sketch
+        run: arduino-cli compile --library . --warnings all -b arduino:avr:uno "examples/ATtiny85/ATtiny85.ino"
+      - name: Build TM1637-NonBlockingAnimate.ino Example Sketch
+        run: arduino-cli compile --library . --warnings all -b arduino:avr:uno "examples/TM1637-NonBlockingAnimate/TM1637-NonBlockingAnimate.ino"

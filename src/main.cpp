@@ -20,13 +20,6 @@ char path[7];
 int count=0;
 void setup_sound();
 
-// NTP Time
-#include "NTPClient.h"
-#include "TimeLib.h"
-#define MILLI_PER_MIN ((time_t)(SECS_PER_MIN * 1000))
-NTPClient timeClient(ntpUDP, "us.pool.ntp.org", 0, 20*MILLI_PER_MIN);
-void setup_ntp();
-void update_time();
 unsigned long nextTime = 0;
 
 // MQTT
@@ -39,19 +32,8 @@ void setup_mqtt();
 void callback_mqtt(char*, byte*, unsigned int);
 
 // Alarm Itself
-bool alarmEnabled = false;
 bool alarmingNow = false;
-time_t alarmTime = 0;
-time_t snoozeTime = 0;
-void print_times();
-void check_alarm();
 
-// Pressure sensor
-#define PRESSURE_THRESHOLD 600
-#define PRESSURE_PIN A0
-uint16_t pressure=0;
-bool bedOccupied = false;
-void update_pressure();
 
 // 7-segment display
 #include "TM1637TinyDisplay.h"
@@ -59,17 +41,75 @@ void update_pressure();
 #define CLK 13
 TM1637TinyDisplay display(CLK, DIO);
 
+// Data from Animator Tool
+const uint8_t IDLE_ANIMATION[38][4] = {
+  { 0x10, 0x00, 0x00, 0x00 },  // Frame 0
+  { 0x18, 0x00, 0x00, 0x00 },  // Frame 1
+  { 0x1c, 0x00, 0x00, 0x00 },  // Frame 2
+  { 0x5c, 0x00, 0x00, 0x00 },  // Frame 3
+  { 0x5c, 0x10, 0x00, 0x00 },  // Frame 4
+  { 0x5c, 0x18, 0x00, 0x00 },  // Frame 5
+  { 0x5c, 0x1c, 0x00, 0x00 },  // Frame 6
+  { 0x5c, 0x5c, 0x00, 0x00 },  // Frame 7
+  { 0x5c, 0x5c, 0x10, 0x00 },  // Frame 8
+  { 0x5c, 0x5c, 0x18, 0x00 },  // Frame 9
+  { 0x5c, 0x5c, 0x1c, 0x00 },  // Frame 10
+  { 0x5c, 0x5c, 0x5c, 0x00 },  // Frame 11
+  { 0x5c, 0x5c, 0x5c, 0x10 },  // Frame 12
+  { 0x5c, 0x5c, 0x5c, 0x18 },  // Frame 13
+  { 0x5c, 0x5c, 0x5c, 0x1c },  // Frame 14
+  { 0x5c, 0x5c, 0x5c, 0x5c },  // Frame 15
+  { 0x5c, 0x5c, 0x5c, 0x5c },  // Frame 16
+  { 0x5c, 0x5c, 0x5c, 0x5c },  // Frame 17
+  { 0x5c, 0x5c, 0x5c, 0x5c },  // Frame 18
+  { 0x5c, 0x5c, 0x5c, 0x1c },  // Frame 19
+  { 0x5c, 0x5c, 0x5c, 0x18 },  // Frame 20
+  { 0x5c, 0x5c, 0x5c, 0x10 },  // Frame 21
+  { 0x5c, 0x5c, 0x5c, 0x00 },  // Frame 22
+  { 0x5c, 0x5c, 0x1c, 0x00 },  // Frame 23
+  { 0x5c, 0x5c, 0x18, 0x00 },  // Frame 24
+  { 0x5c, 0x5c, 0x10, 0x00 },  // Frame 25
+  { 0x5c, 0x5c, 0x00, 0x00 },  // Frame 26
+  { 0x5c, 0x1c, 0x00, 0x00 },  // Frame 27
+  { 0x5c, 0x18, 0x00, 0x00 },  // Frame 28
+  { 0x5c, 0x10, 0x00, 0x00 },  // Frame 29
+  { 0x5c, 0x00, 0x00, 0x00 },  // Frame 30
+  { 0x1c, 0x00, 0x00, 0x00 },  // Frame 31
+  { 0x18, 0x00, 0x00, 0x00 },  // Frame 32
+  { 0x10, 0x00, 0x00, 0x00 },  // Frame 33
+  { 0x00, 0x00, 0x00, 0x00 },  // Frame 34
+  { 0x00, 0x00, 0x00, 0x00 },  // Frame 35
+  { 0x00, 0x00, 0x00, 0x00 },  // Frame 36
+  { 0x00, 0x00, 0x00, 0x00 }   // Frame 37
+};
+
+/* Animation Data - HGFEDCBA Map */
+const uint8_t ALARM_ANIMATION[13][4] = {
+  { 0x00, 0x00, 0x00, 0x00 },  // Frame 0
+  { 0x00, 0x00, 0x00, 0x00 },  // Frame 1
+  { 0x00, 0x00, 0x00, 0x00 },  // Frame 2
+  { 0x00, 0x00, 0x00, 0x00 },  // Frame 3
+  { 0x00, 0x02, 0x10, 0x00 },  // Frame 4
+  { 0x00, 0x06, 0x30, 0x00 },  // Frame 5
+  { 0x00, 0x16, 0x32, 0x00 },  // Frame 6
+  { 0x00, 0x36, 0x36, 0x00 },  // Frame 7
+  { 0x02, 0x36, 0x36, 0x10 },  // Frame 8
+  { 0x06, 0x36, 0x36, 0x30 },  // Frame 9
+  { 0x16, 0x36, 0x36, 0x32 },  // Frame 10
+  { 0x36, 0x36, 0x36, 0x36 },  // Frame 11
+  { 0x36, 0x36, 0x36, 0x36 }   // Frame 12
+};
+
+  
+
 
 void setup()
 {
-  //Serial.begin(115200);
-  //while(!Serial) {}; // wait
+  Serial.begin(115200);
+  while(!Serial) {}; // wait
   display.setBrightness(BRIGHT_2);
   setup_wifi();
-  timeClient.begin();
-  timeClient.update();
   setup_sound();
-  pinMode(PRESSURE_PIN, INPUT);
   setup_mqtt();
 }
 
@@ -79,28 +119,28 @@ void loop()
     if (WiFi.status() != WL_CONNECTED) setup_wifi();
     if (!mqttClient.connected()) setup_mqtt();
     mqttClient.loop();                        // need to receive mqtt to know if snooze happened
-    //print_times();
-    display.showNumber(pressure);
+    //display.showNumber(pressure);
     nextTime = millis() + 1000;
   }
-  check_alarm();                            // need to evaluate whether we should be alarming
-  update_pressure();
-  if (mp3->isRunning()) {                   // need to continually loop without delay during playback
-    if (!mp3->loop()) {
-      //Serial.println("Audio stopped");
-      mp3->stop();
+  
+  if (alarmingNow) {
+    if (!display.Animate()) display.startAnimation(ALARM_ANIMATION, FRAMES(ALARM_ANIMATION), TIME_MS(25));  //startAn.. is nonblocking,  showAn.. presumably blocks
+    if (mp3->isRunning()) {                   // need to continually loop without delay during playback
+      if (!mp3->loop()) {
+        Serial.println("Audio stopped");
+        mp3->stop();
+      }
+    } else {
+      setup_sound();
+      Serial.println("Wake up! Rise and shine!");
+
+      mp3->begin(file, out);  //start or restart playback when not playing. Should restart immediately without a 1000ms delay given ordering of loop()
     }
-    //Serial.println("Wake up! Rise and shine!");
   } else {
-    update_time();
-    delay(100);                            // only delay while not playing audio
+    if (!display.Animate()) display.startAnimation(IDLE_ANIMATION, FRAMES(IDLE_ANIMATION), TIME_MS(100));  //startAn.. is nonblocking,  showAn.. presumably blocks
   }
 }
 
-void update_pressure() {
-  pressure = (pressure*9 + analogRead(PRESSURE_PIN))/10;  //smoothing
-  bedOccupied = pressure > PRESSURE_THRESHOLD;
-}
 
 void setup_sound() {
   SPIFFS.begin();
@@ -116,14 +156,14 @@ void setup_sound() {
 
 void setup_wifi() {
   display.showString("WIFI");
-  //Serial.println();
+  Serial.println();
   WiFi.hostname("AlarmClock");
   WiFi.setPhyMode(WIFI_PHY_MODE_11B);
-  //Serial.print("Connecting to ");
-  //Serial.print(WIFI_SSID);
+  Serial.print("Connecting to ");
+  Serial.print(WIFI_SSID);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
-    //Serial.print(".");
+    Serial.print(".");
     digitalWrite(LED_BUILTIN, LOW);
     delay(250);
     digitalWrite(LED_BUILTIN, HIGH);
@@ -131,8 +171,8 @@ void setup_wifi() {
   }
   WiFi.setAutoReconnect(true);
   WiFi.persistent(true);
-  //Serial.print(" WiFi connected on IP address ");
-  //Serial.println(WiFi.localIP());
+  Serial.print(" WiFi connected on IP address ");
+  Serial.println(WiFi.localIP());
   delay(1000);
 }
 
@@ -141,97 +181,48 @@ void setup_mqtt() {
   mqttClient.setServer(MQTT_Server, MQTT_Port);
   mqttClient.setCallback(callback_mqtt);
   while (!mqttClient.connected()) {
-    //Serial.print("Attempting MQTT connection...");
+    Serial.print("Attempting MQTT connection...");
     String mqttClientId = "bedalarm8266";
     if (mqttClient.connect(mqttClientId.c_str(), MQTT_User, MQTT_Password)) {
-      //Serial.println("connected");
+      Serial.println("connected");
     } else {
-      //Serial.print("failed, rc=");
-      //Serial.print(mqttClient.state());
-      //Serial.println(" will try again in 5 seconds");
+      Serial.print("failed, rc=");
+      Serial.print(mqttClient.state());
+      Serial.println(" will try again in 5 seconds");
       delay(5000);
     }
   }
-  if (mqttClient.subscribe("homeassistant/device/bedalarm/time", 1)) {    //unix timestamp of next alarm time, 10m delay at rollover before sending tomorrow's date
-    //Serial.println("Subscribed to time");
-  } else {
-    //Serial.println("Couldn't subscribe to alarm time");
-  }
   if (mqttClient.subscribe("homeassistant/device/bedalarm/enable", 1)) {  //string "on" or "off" 
-    //Serial.println("Subscribed to enable");
+    Serial.println("Subscribed to enable");
   } else {
-    //Serial.println("Couldn't subscribe to alarm enable");
-  }
-  if (mqttClient.subscribe("homeassistant/device/bedalarm/snooze", 1)) {    //unix timestamp of end of most recently requested snooze/suspend
-    //Serial.println("Subscribed to snooze");
-  } else {
-    //Serial.println("Couldn't subscribe to alarm snooze");
+    Serial.println("Couldn't subscribe to alarm enable");
   }
 }
 
 void callback_mqtt(char* topic, byte* payload, unsigned int length) {
-  // Serial.print("Message arrived [");
-  // Serial.print(topic);
-  // Serial.print("] ");
-  // for (unsigned int i=0;i<length;i++) {
-  //   Serial.print((char)payload[i]);
-  // }
-  // Serial.println();
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+  for (unsigned int i=0;i<length;i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();
 
   if (strcmp(topic, TOPIC_ENABLE) == 0) {
     if (payload[1] == 'n') { // "oN"
-      alarmEnabled = true;
+      alarmingNow = true;
+      display.stopAnimation();
+      display.showString("On");
     } else if (payload[1] == 'f')  { // "oFf"
-      alarmEnabled = false;
+      alarmingNow = false;
+      if (mp3->isRunning()) mp3->stop();
+      count = 0;  //Reset volume
+      display.stopAnimation();
+      display.showString("Off");
     } else {
-      // Serial.print("ERROR received '");
-      //for (unsigned int i=0;i<length;i++) Serial.print((char)payload[i]);
-      //Serial.println("'");
+      Serial.print("ERROR received '");
+      for (unsigned int i=0;i<length;i++) Serial.print((char)payload[i]);
+      Serial.println("'");
     }
-  }
-  if (strcmp(topic, TOPIC_TIME) == 0) {
-    alarmTime = atoi((char*)payload);
-  }
-  if (strcmp(topic, TOPIC_SNOOZE) == 0) {
-    snoozeTime = atoi((char*)payload);
-    //if (snoozeTime > now()) alarmingNow = false;  // should be redundant with check_alarm() 
-  }
-}
-
-void update_time() {
-  if(now() < SECS_YR_2000) {
-    //Serial.println("Forcing time initialization");
-    while(!timeClient.forceUpdate()) {};
-    setTime(timeClient.getEpochTime());
-  }
-  if(timeClient.update()) { //uses interval specified at initialization
-    //Serial.println("Time Updated");
-    setTime(timeClient.getEpochTime());
-  }
-}
-
-// void print_times() {
-//   Serial.print(now());
-//   Serial.print("    Alarm at ");
-//   Serial.print(alarmTime);
-//   Serial.print(" ");
-//   Serial.print(alarmEnabled);
-//   Serial.print(" in ");
-//   Serial.print((alarmTime-now())/SECS_PER_HOUR);
-//   Serial.print(" hours.");
-//   Serial.println();
-// }
-
-void check_alarm() {
-  if (alarmEnabled && now()>alarmTime && now()>snoozeTime && bedOccupied) {
-    alarmingNow = true;
-    if (!mp3->isRunning()) {
-      setup_sound();
-      mp3->begin(file, out);  //start or restart playback when not playing. Should restart immediately without a 1000ms delay given ordering of loop()
-    }
-  } else if (alarmingNow && (now()<snoozeTime || bedOccupied==false)) {  //don't use 1) toggling because of risk of not reenabling 2) time because of rollover behavior
-    alarmingNow = false;
-    mp3->stop();
-    count = 0;  //Reset volume
   }
 }
